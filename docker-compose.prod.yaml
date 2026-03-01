@@ -1,0 +1,16 @@
+services:
+  backend:
+    image: amazingsafari-10
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+  database:
+    image: postgres:18.1-alpine
+    ports:
+      - "5432:5432"
+    env_file:
+      - path: .env
+        required: true
