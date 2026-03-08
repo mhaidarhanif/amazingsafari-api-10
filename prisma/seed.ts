@@ -3,11 +3,13 @@ import { dataProducts } from "../src/modules/product/data";
 
 async function main() {
   for (const seedProduct of dataProducts) {
-    await prisma.product.upsert({
+    const product = await prisma.product.upsert({
       where: { slug: seedProduct.slug },
       update: seedProduct,
       create: seedProduct,
     });
+
+    console.log(`🧸 ${product.name}`);
   }
 }
 

@@ -1,19 +1,4 @@
-type Product = {
-  id: string;
-  slug: string;
-  name: string;
-  sku: string;
-  price: number;
-  stockQuantity: number;
-  imageUrl: string;
-  description: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
-type Products = Product[];
-
-type SeedProduct = Omit<Product, "id" | "createdAt" | "updatedAt">;
-type SeedProducts = SeedProduct[];
+import { SeedProducts } from "./schema";
 
 export const dataProducts: SeedProducts = [
   {
