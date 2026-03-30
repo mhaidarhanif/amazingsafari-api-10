@@ -25,21 +25,29 @@ authRoute.openapi(
     },
   }),
   async (c) => {
-    const validatedBody = c.req.valid("json");
+    try {
+      const validatedBody = c.req.valid("json");
 
-    const newUser = await prisma.user.create({
-      data: {
-        username: validatedBody.username,
-        email: validatedBody.email,
-        name: validatedBody.name,
-        password: {
-          create: {
-            hash: await hashPassword(validatedBody.password),
+      const newUser = await prisma.user.create({
+        data: {
+          username: validatedBody.username,
+          email: validatedBody.email,
+          name: validatedBody.name,
+          password: {
+            create: {
+              hash: await hashPassword(validatedBody.password),
+            },
           },
         },
-      },
-    });
+      });
 
-    return c.json(newUser);
+      return c.json(newUser);
+    } catch (error) {
+      console.error(error);
+      return c.json({
+        message: "Failed to register new user",
+        error,
+      });
+    }
   },
 );
