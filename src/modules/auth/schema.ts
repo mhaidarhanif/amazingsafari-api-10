@@ -6,7 +6,7 @@ export const RegisterUserSchema = UserSchema.omit({
   createdAt: true,
   updatedAt: true,
 }).extend({
-  password: z.string().openapi({ example: "***" }),
+  password: z.string().openapi({ example: "exampleexampleexample" }),
 });
 
 export type RegisterUser = z.infer<typeof RegisterUserSchema>;

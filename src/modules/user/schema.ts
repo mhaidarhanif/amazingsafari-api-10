@@ -11,11 +11,6 @@ export const UserSchema = UserModelSchema.omit({
   name: z.string().openapi({ example: "Example" }),
 });
 
-export const UsersSchema = UserSchema.array();
-
-export type User = z.infer<typeof UserSchema>;
-export type Users = z.infer<typeof UsersSchema>;
-
 export const SeedUserSchema = UserSchema.omit({
   id: true,
   createdAt: true,
@@ -23,6 +18,19 @@ export const SeedUserSchema = UserSchema.omit({
 });
 
 export const SeedUsersSchema = SeedUserSchema.array();
+
+export const PublicUserSchema = UserSchema.omit({
+  email: true,
+});
+
+export const UsersSchema = UserSchema.array();
+export const PublicUsersSchema = PublicUserSchema.array();
+
+export type User = z.infer<typeof UserSchema>;
+export type Users = z.infer<typeof UsersSchema>;
+
+export type PublicUser = z.infer<typeof PublicUserSchema>;
+export type PublicUsers = z.infer<typeof PublicUsersSchema>;
 
 export type SeedUser = z.infer<typeof SeedUserSchema>;
 export type SeedUsers = z.infer<typeof SeedUsersSchema>;
