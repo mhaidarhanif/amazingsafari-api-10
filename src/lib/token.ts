@@ -5,7 +5,7 @@ const tokenSecretKey = process.env.TOKEN_SECRET_KEY;
 
 export function signToken(user: TokenUser) {
   try {
-    const payload = { id: user.id };
+    const payload = { sub: user.id };
 
     if (!tokenSecretKey) {
       throw new Error("Failed to sign token. Token secret key is not setup.");
