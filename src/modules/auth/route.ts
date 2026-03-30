@@ -7,7 +7,7 @@ import {
   RegisterUserSchema,
 } from "./schema";
 import { UserSchema } from "../user/schema";
-import { hashPassword } from "../../lib/hash";
+import { hashPassword, verifyPassword } from "../../lib/hash";
 
 export const authRoute = new OpenAPIHono();
 
@@ -88,6 +88,29 @@ authRoute.openapi(
           password: { select: { hash: true } },
         },
       });
+
+      if (!existingUser?.password) {
+        return c.json(
+          {
+            message: "Failed to login. User has no password.",
+          },
+          400,
+        );
+      }
+
+      const isPasswordVerified = await verifyPassword(
+        existingUser?.password.hash,
+        validatedBody.password,
+      );
+
+      if (!isPasswordVerified) {
+        return c.json(
+          {
+            message: "Failed to login. Password is wrong.",
+          },
+          400,
+        );
+      }
 
       return c.json({
         token: "",
