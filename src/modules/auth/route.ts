@@ -9,6 +9,7 @@ import {
 import { UserSchema } from "../user/schema";
 import { hashPassword, verifyPassword } from "../../lib/hash";
 import { signToken } from "../../lib/token";
+import { checkAuthMiddleware } from "./middleware";
 
 export const authRoute = new OpenAPIHono();
 
@@ -133,6 +134,39 @@ authRoute.openapi(
       return c.json(
         {
           message: "Failed to login new user",
+          error,
+        },
+        400,
+      );
+    }
+  },
+);
+
+authRoute.openapi(
+  createRoute({
+    method: "get",
+    path: "/me",
+    middleware: checkAuthMiddleware,
+    responses: {
+      200: {
+        content: { "application/json": { schema: UserSchema } },
+        description: "Get authenticated user",
+      },
+      400: {
+        description: "Failed to get authenticated user",
+      },
+    },
+  }),
+  async (c) => {
+    try {
+      const user = c.get("user");
+
+      return c.json(user);
+    } catch (error) {
+      console.error(error);
+      return c.json(
+        {
+          message: "Failed to register new user",
           error,
         },
         400,
