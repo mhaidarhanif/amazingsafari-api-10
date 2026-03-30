@@ -1,5 +1,5 @@
 import * as jwt from "jsonwebtoken";
-import { TokenUser, User } from "../modules/user/schema";
+import { TokenUser } from "../modules/user/schema";
 
 const tokenSecretKey = process.env.TOKEN_SECRET_KEY;
 
@@ -26,9 +26,9 @@ export function verifyToken(token: string) {
       throw new Error("Failed to verify token. Token secret key is not setup.");
     }
 
-    const decodedToken = jwt.verify(token, tokenSecretKey);
+    const payload = jwt.verify(token, tokenSecretKey);
 
-    return decodedToken;
+    return payload;
   } catch (error) {
     console.error(error);
     throw new Error(`Failed to verify token: ${error}`);
