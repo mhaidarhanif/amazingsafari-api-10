@@ -1,8 +1,14 @@
 import z from "zod";
 import { UserModelSchema } from "../../generated/zod/schemas";
 
+export { UserModelSchema };
+
 export const UserSchema = UserModelSchema.omit({
   password: true,
+}).extend({
+  username: z.string().openapi({ example: "example" }),
+  email: z.string().openapi({ example: "example@example.com" }),
+  name: z.string().openapi({ example: "Example" }),
 });
 
 export const UsersSchema = UserSchema.array();
