@@ -23,6 +23,8 @@ export const PublicUserSchema = UserSchema.omit({
   email: true,
 });
 
+export const TokenUserSchema = UserSchema.pick({ id: true });
+
 export const UsersSchema = UserSchema.array();
 export const PublicUsersSchema = PublicUserSchema.array();
 
@@ -34,3 +36,5 @@ export type PublicUsers = z.infer<typeof PublicUsersSchema>;
 
 export type SeedUser = z.infer<typeof SeedUserSchema>;
 export type SeedUsers = z.infer<typeof SeedUsersSchema>;
+
+export type TokenUser = z.infer<typeof TokenUserSchema>;
