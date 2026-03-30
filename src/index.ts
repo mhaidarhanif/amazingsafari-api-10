@@ -6,6 +6,7 @@ import { Scalar } from "@scalar/hono-api-reference";
 import { productRoute } from "./modules/product/route";
 import { commonRoute } from "./modules/common/route";
 import { userRoute } from "./modules/user/route";
+import { authRoute } from "./modules/auth/route";
 
 const app = new OpenAPIHono();
 
@@ -15,6 +16,7 @@ app.use(cors());
 app.route("/", commonRoute);
 app.route("/products", productRoute);
 app.route("/users", userRoute);
+app.route("/auth", authRoute);
 
 // The OpenAPI documentation will be available at /doc
 app.doc("/openapi.json", {
