@@ -114,8 +114,6 @@ authRoute.openapi(
         );
       }
 
-      console.log({ existingUser });
-
       const token = signToken({ id: existingUser.id });
 
       const loginResponse = {
